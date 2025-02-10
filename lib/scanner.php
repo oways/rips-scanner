@@ -98,7 +98,8 @@ class Scanner
 
 		$this->inc_file_stack = array(realpath($this->file_name));
 		$this->inc_map = array();
-		$this->include_paths = Analyzer::get_ini_paths(ini_get("include_path"));
+		$analyzer = new Analyzer();
+		$this->include_paths = $analyzer->get_ini_paths(ini_get("include_path"));
 		$this->file_pointer = end($this->inc_file_stack);
 		if(!isset($GLOBALS['file_sinks_count'][$this->file_pointer]))
 			$GLOBALS['file_sinks_count'][$this->file_pointer] = 0;
@@ -261,11 +262,21 @@ class Scanner
 						// stop at var declarations before if else statement. they are overwritten
 						if($clean_vars_before_ifelse)
 						{
-							for($c=0;$c<count($var_declares[$var_name]);$c++)
-							{
-								if(count($var_declares[$var_name][$c]->dependencies) < count($var_declare->dependencies))
-								{
-									$var_declares[$var_name][$c-1]->stopvar=true;
+							for ($c = 0; $c < count($var_declares[$var_name]); $c++) {
+								if (!isset($var_declares[$var_name][$c])) {
+									die("Error: \$var_declares['$var_name'][$c] is not set. Scanner.php:269\n");
+								}
+							
+								if (count($var_declares[$var_name][$c]->dependencies) < count($var_declare->dependencies)) {
+									if ($c > 0) {  // ✅ Ensure $c-1 is never negative
+										if (!isset($var_declares[$var_name][$c-1])) {
+											die("Error: \$var_declares['$var_name'][$c-1] is not set at scanner.php:269\n");
+										}
+							
+										if ($var_declares[$var_name][$c-1] === null) {
+											die("Error: \$var_declares['$var_name'][$c-1] is NULL at scanner.php:269\n");
+										}
+									}
 									break;
 								}
 							}

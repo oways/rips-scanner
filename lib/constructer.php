@@ -35,7 +35,7 @@ You should have received a copy of the GNU General Public License along with thi
 			$this->id = 0;
 			$this->tokens = $tokens;
 			$this->tokenscanstart = 0;
-			$this->tokenscanstop = count($tokens);
+			$this->tokenscanstop = is_array($tokens) ? count($tokens) : 0;
 			$this->value = '';
 			$this->comment = $comment;
 			$this->line = '';

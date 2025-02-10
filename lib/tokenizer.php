@@ -315,7 +315,11 @@ class Tokenizer
 			// lowercase all function names because PHP doesn't care
 				else if( $this->tokens[$i][0] === T_FUNCTION )
 				{
-					$this->tokens[$i+1][1] = strtolower($this->tokens[$i+1][1]);
+					if (isset($this->tokens[$i+1]) && is_array($this->tokens[$i+1]) && isset($this->tokens[$i+1][1])) {
+						$this->tokens[$i+1][1] = strtolower($this->tokens[$i+1][1]);
+					} else {
+						error_log("Skipping invalid token at index " . ($i+1) . ": " . var_export($this->tokens[$i+1], true));
+					}
 				}
 				else if( $this->tokens[$i][0] === T_STRING && $this->tokens[$i+1] === '(')
 				{

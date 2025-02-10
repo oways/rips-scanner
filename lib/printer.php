@@ -422,28 +422,19 @@ You should have received a copy of the GNU General Public License along with thi
 											}
 										}
 									}
-
-									if(!empty($tree->get) || !empty($tree->post)
-									|| !empty($tree->cookie) || !empty($tree->files)
-									|| !empty($tree->server) )
+									
+									if (!empty($tree->get) || !empty($tree->post)
+										|| !empty($tree->cookie) || !empty($tree->files)
+										|| !empty($tree->server)) 
 									{
-										/*echo '<div class="hotpatch" title="hotpatch" ',
-										'onClick="openHotpatch(this, \'',
-										addslashes($tree->filename),
-										'\',\'',implode(',',array_unique($tree->get)),
-										'\',\'',implode(',',array_unique($tree->post)),
-										'\',\'',implode(',',array_unique($tree->cookie)),
-										'\',\'',implode(',',array_unique($tree->files)),
-										'\',\'',implode(',',array_unique($tree->server)),'\');"></div>',"\n",*/
-
 										echo '<div class="exploit" title="generate exploit" ',
-										'onClick="openExploitCreator(this, \'',
-										addslashes($tree->filename),
-										'\',\'',implode(',',array_unique($tree->get)),
-										'\',\'',implode(',',array_unique($tree->post)),
-										'\',\'',implode(',',array_unique($tree->cookie)),
-										'\',\'',implode(',',array_unique($tree->files)),
-										'\',\'',implode(',',array_unique($tree->server)),'\');"></div>';
+											'onClick="openExploitCreator(this, \'',
+											addslashes($tree->filename), 
+											'\',\'', implode(',', array_unique($tree->get ?? [])),
+											'\',\'', implode(',', array_unique($tree->post ?? [])),
+											'\',\'', implode(',', array_unique($tree->cookie ?? [])),
+											'\',\'', implode(',', array_unique($tree->files ?? [])),
+											'\',\'', implode(',', array_unique($tree->server ?? [])), '\');"></div>';
 									}
 									// $tree->title
 									echo '</td><td><span class="vulntitle">',$tree->title,'</span>',

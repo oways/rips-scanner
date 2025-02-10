@@ -26,6 +26,11 @@ See original php-rips scan html form (index.php) for more options.
   php index.php [option=value]
 ```
 
+For stable results:
+```
+php index.php loc=[src path] subdirs=1 vector=all verbosity=2 | tee report.html
+```
+
 | Options | Value |
 | --- | --- |
 | loc | target scan file/folder <path> |
